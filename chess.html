@@ -1,0 +1,95 @@
+<!DOCTYPE html> 
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">	
+		<style>
+		table {
+			borders: 1px solid black;
+		}
+		.borders{
+			border: 1px solid red;
+		}
+		</style>
+		
+	</head>
+	<body>
+		<div id="board">
+		</div>
+
+		<script>
+			function writeAddress(node){
+				var address = node.innerHTML;
+				var showAddress = document.createElement('div');
+				showAddress.innerHTML = address;
+				node.parentNode.parentNode.appendChild(showAddress);// не получилось произвольное место страницы
+			}
+
+			function highlight(node){
+				var x = document.getElementsByClassName('borders');
+				if(x){
+				  for (i = 0; i < x.length; i++) { // почему просто document.getElementsByClassName('borders')[0].classList.remove("borders") не работает?
+            x[i].classList.remove("borders");
+        }
+			}
+				node.classList.add("borders");
+			}
+
+			// function keyWalk(event,locationX,locationY){
+				
+			// switch (event.keyCode) {
+			// 		case 37: {locationX--;
+			// 			var newTarget = document.getElementByClassName("borders");
+
+			// 			writeAddress(target); highlight(target);}
+			// 			break;
+			// 		case 38:{ locationY++;  writeAddress(target); highlight(target);}
+			// 			break;
+			// 		case 39: {locationX++;  writeAddress(target); highlight(target);}
+			// 			break;
+			// 		case 40: {locationY--;  writeAddress(target); highlight(target);}
+			// 			break;
+			// 	}
+			// }
+
+			function BlackWhite(cell,i,j){
+			  if((i%2 == 0 && j%2 !== 0) | (i%2 !== 0 && j%2 == 0)){
+			    cell.style.backgroundColor = "white";
+			  } else cell.style.backgroundColor = "black";
+			}
+
+
+			function chessTable(){
+				for(var i=0; i < 8; i++){
+					var row = document.createElement('tr');
+					for(var j=0;  j < 8;j++){
+								var cell = document.createElement('td');
+								var chessABC = ["a","b","c","d","e","f","g","h"];
+								cell.innerHTML = (i+1) + chessABC[j];
+								BlackWhite(cell,i,j);
+								row.appendChild(cell);
+							}
+					document.getElementById('board').appendChild(row);
+				}
+			}
+			
+
+			window.onload = function(){
+				chessTable();
+				board.onclick = function(event){ //честно говоря тупо переписала с учебника и мало поняла про target и event
+					
+					var target = event.target;
+					if(target.tagName !== "TD") return;
+					writeAddress(target);
+					highlight(target);
+					//locationX = event.clientX;
+					//locationY = event.clientY;
+				}
+				// document.onkeydown = function(event){
+				// 	keyWalk(event,locationX,locationY);
+				// }
+			}
+
+		</script> 
+	</body>
+</html>
