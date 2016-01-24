@@ -3,12 +3,6 @@
 	<head>
 		<title></title>
 		<meta charset="utf-8">	
-		<style>
-		table {
-			borders: 1px solid black;
-		}
-		</style>
-		
 	</head>
 	<body>
 		<div id="board">
