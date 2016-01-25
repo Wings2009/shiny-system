@@ -35,22 +35,46 @@
 				node.classList.add("borders");
 			}
 
-			// function keyWalk(event,locationX,locationY){
-				
-			// switch (event.keyCode) {
-			// 		case 37: {locationX--;
-			// 			var newTarget = document.getElementByClassName("borders");
 
-			// 			writeAddress(target); highlight(target);}
-			// 			break;
-			// 		case 38:{ locationY++;  writeAddress(target); highlight(target);}
-			// 			break;
-			// 		case 39: {locationX++;  writeAddress(target); highlight(target);}
-			// 			break;
-			// 		case 40: {locationY--;  writeAddress(target); highlight(target);}
-			// 			break;
-			// 	}
-			// }
+			function keyWalk(event){
+				var x = document.getElementsByClassName('borders');
+				for (i = 0; i < x.length; i++){
+						switch (event.keyCode) {
+							case 37: {
+								if (x[i].previousSibling.tagName == "TD"){
+									writeAddress(x[i].previousSibling);
+									highlight(x[i].previousSibling);
+									}
+								}
+								break;
+							case 38:{ 
+									var index = x[i].cellIndex;
+									var prTR = x[i].parentNode.previousSibling;
+									if(prTR.tagName == "TR"){
+											writeAddress(prTR.children[index]);//почему cell[index] не работает??
+											highlight(prTR.children[index]);
+									}
+							}
+								break;
+							case 39: {
+								if (x[i].nextSibling.tagName == "TD"){
+									writeAddress(x[i].nextSibling);
+									highlight(x[i].nextSibling);
+								}
+								}
+								break;
+							case 40: {
+								var index = x[i].cellIndex;
+								var nextTR = x[i].parentNode.nextSibling;
+								if(nextTR.tagName == "TR"){
+											writeAddress(nextTR.children[index]);
+											highlight(nextTR.children[index]);
+								}
+							}
+								break;
+						}
+				}
+			}
 
 			function BlackWhite(cell,i,j){
 			  if((i%2 == 0 && j%2 !== 0) | (i%2 !== 0 && j%2 == 0)){
@@ -82,12 +106,10 @@
 					if(target.tagName !== "TD") return;
 					writeAddress(target);
 					highlight(target);
-					//locationX = event.clientX;
-					//locationY = event.clientY;
 				}
-				// document.onkeydown = function(event){
-				// 	keyWalk(event,locationX,locationY);
-				// }
+				document.onkeydown = function(event){
+					keyWalk(event);
+				}
 			}
 
 		</script> 
